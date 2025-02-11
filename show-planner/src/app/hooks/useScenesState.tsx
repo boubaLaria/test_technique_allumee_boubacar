@@ -24,6 +24,7 @@ const useScenesState = () => {
     const newSceneId = scenes.length + 1;
     const newScene: Scene = { id: newSceneId, name: `Scene ${newSceneId}`, duration: 30 };
     setScenes([...scenes, newScene]);
+    setTransitions([...transitions, { id: newSceneId, prevScene: `Scene ${newSceneId - 1}`, nextScene: `Scene ${newSceneId}`, duration: 10 }]);
   };
 
   const removeScene = (id: number) => {
