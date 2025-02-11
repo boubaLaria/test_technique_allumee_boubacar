@@ -4,19 +4,19 @@ import { formatTime } from "../utils/timeFormatter";
 interface Scene {
   id: number;
   name: string;
-  duration: number; // duration in seconds
+  duration: number; // durée en secondes
 }
 
 interface Transition {
   id: number;
   prevScene: string;
   nextScene: string;
-  duration: number; // duration in seconds
+  duration: number; // durée en secondes
 }
 
 const useScenesState = () => {
   const [scenes, setScenes] = useState<Scene[]>([
-    { id: 1, name: "Scene 1", duration: 30 }, // 30 seconds
+    { id: 1, name: "Scene 1", duration: 30 }, // 30 secondes
   ]);
 
   const [transitions, setTransitions] = useState<Transition[]>([]);
@@ -26,7 +26,7 @@ const useScenesState = () => {
     const newScene: Scene = {
       id: newSceneId,
       name: `Scene ${newSceneId}`,
-      duration: 30, // 30 seconds
+      duration: 30, // 30 secondes
     };
 
     // Trouver l'index de la scène cliquée
@@ -35,18 +35,18 @@ const useScenesState = () => {
     // Insérer la nouvelle scène après la scène cliquée
     const updatedScenes = [
       ...scenes.slice(0, index + 1),
-      newScene, 
-      ...scenes.slice(index + 1), 
+      newScene,
+      ...scenes.slice(index + 1),
     ];
 
     setScenes(updatedScenes);
 
     // Créer une transition pour la nouvelle scène
-    const newTransition = {
+    const newTransition: Transition = {
       id: newSceneId,
-      prevScene: `Scene ${id}`, 
-      nextScene: `Scene ${newSceneId}`, 
-      duration: 10, // 10 seconds
+      prevScene: `Scene ${id}`,
+      nextScene: `Scene ${newSceneId}`,
+      duration: 10, // 10 secondes
     };
 
     setTransitions([...transitions, newTransition]);
@@ -55,15 +55,8 @@ const useScenesState = () => {
   const removeScene = (id: number) => {
     const updatedScenes = scenes.filter((scene) => scene.id !== id);
     setScenes(updatedScenes);
-    if (id === scenes.length - 1) {
-      setTransitions(
-        transitions.filter(
-          (tr) =>
-            tr.prevScene !== `Scene ${id - 1}` && tr.nextScene !== `Scene ${id}`
-        )
-      );
-      return;
-    }
+
+    // Supprimer les transitions liées à la scène supprimée
     setTransitions(
       transitions.filter(
         (tr) => tr.prevScene !== `Scene ${id}` && tr.nextScene !== `Scene ${id}`
@@ -77,8 +70,30 @@ const useScenesState = () => {
   };
 
   const calculateTotalTransitionDuration = () => {
-    const totalSeconds = transitions.reduce((acc, transition) => acc + transition.duration, 0);
+    const totalSeconds = transitions.reduce(
+      (acc, transition) => acc + transition.duration,
+      0
+    );
     return formatTime(totalSeconds);
+  };
+
+  const calculateTotalSceneAndTransitionDuration = () => {
+    const totalSceneSeconds = scenes.reduce(
+      (acc, scene) => acc + scene.duration,
+      0
+    );
+    const totalTransitionSeconds = transitions.reduce(
+      (acc, transition) => acc + transition.duration,
+      0
+    );
+    const totalSeconds = totalSceneSeconds + totalTransitionSeconds;
+
+    return formatTime(totalSeconds);
+  };
+
+  const resetScenes = () => {
+    setScenes([{ id: 1, name: "Scene 1", duration: 30 }]);
+    setTransitions([]);
   };
 
   return {
@@ -90,6 +105,8 @@ const useScenesState = () => {
     setTransitions,
     calculateTotalSceneDuration,
     calculateTotalTransitionDuration,
+    calculateTotalSceneAndTransitionDuration,
+    resetScenes,
   };
 };
 

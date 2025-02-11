@@ -15,6 +15,8 @@ const MainPage: React.FC = () => {
     setTransitions,
     calculateTotalSceneDuration,
     calculateTotalTransitionDuration,
+    calculateTotalSceneAndTransitionDuration,
+    resetScenes,
   } = useScenesState();
 
   const handleSceneChange = (
@@ -63,20 +65,32 @@ const MainPage: React.FC = () => {
               </div>
             ))}
             <hr className="my-4" />
+            <div className="flex justify-between items-center  mb-4">
+              <h3 className="text-lg font-semibold">Scenography duration</h3>
+              <span className="text-lg font-semibold">
+                {calculateTotalSceneAndTransitionDuration()}
+              </span>
+            </div>
             <div className="flex justify-between items-center">
-              <h3 className="text-lg font-semibold">Total Scene Duration</h3>
+              <h3 className="text-lg font-semibold">Scenes duration</h3>
               <span className="text-lg font-semibold">
                 {calculateTotalSceneDuration()}
               </span>
             </div>
-            <div className="flex justify-between items-center mt-4">
-              <h3 className="text-lg font-semibold">Total Transition Duration</h3>
+            <div className="flex justify-between items-center">
+              <h3 className="text-lg font-semibold">Transition Duration</h3>
               <span className="text-lg font-semibold">
                 {calculateTotalTransitionDuration()}
               </span>
             </div>
-            <div className="flex justify-end mt-4">
-              <button className="bg-primary text-blue-400 px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
+            <div className="flex justify-between mt-4">
+              <button onClick={resetScenes} className="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
+                Reset
+              </button>
+              <button className="bg-blue-500 text-white  px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
+                Load
+              </button>
+              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
                 Save
               </button>
             </div>
