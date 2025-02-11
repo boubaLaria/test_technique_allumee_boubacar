@@ -5,7 +5,21 @@ import TransitionRow from "./components/TransitionRow";
 import useScenesState from "./hooks/useScenesState";
 
 const MainPage: React.FC = () => {
-  const { scenes, addScene } = useScenesState();
+  const { scenes, transitions, addScene, removeScene, setScenes, setTransitions } = useScenesState();
+
+  const handleSceneChange = (index: number, key: "name" | "duration", value: string | number) => {
+    const updatedScenes = scenes.map((scene, i) =>
+      i === index ? { ...scene, [key]: value } : scene
+    );
+    setScenes(updatedScenes);
+  };
+
+  const handleTransitionChange = (index: number, value: number) => {
+    const updatedTransitions = transitions.map((transition, i) =>
+      i === index ? { ...transition, duration: value } : transition
+    );
+    setTransitions(updatedTransitions);
+  };
 
   return (
     <div className="container mx-auto p-4">
@@ -16,13 +30,16 @@ const MainPage: React.FC = () => {
             index={index}
             name={scene.name}
             duration={scene.duration}
+            onChange={handleSceneChange}
             onAdd={addScene}
+            onRemove={() => removeScene(scene.id)}
           />
-          {index +1 < scenes.length && (
+          {index < transitions.length && (
             <TransitionRow
-              prevScene={scene.name}
-              nextScene={scenes[index+1].name}
-              duration={10}
+              prevScene={transitions[index].prevScene}
+              nextScene={transitions[index].nextScene}
+              duration={transitions[index].duration}
+              onChange={(value) => handleTransitionChange(index, value)}
             />
           )}
         </div>
