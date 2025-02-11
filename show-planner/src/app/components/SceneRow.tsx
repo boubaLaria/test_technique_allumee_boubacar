@@ -4,14 +4,14 @@ interface SceneRowProps {
   index: number;
   name: string;
   duration: number;
-
+  onAdd: () => void;
 }
 
 const SceneRow: React.FC<SceneRowProps> = ({
   index,
   name,
   duration,
-
+  onAdd,
 }) => {
   return (
     <div className="flex items-center space-x-4 border-b py-3 px-4 bg-gray-100 rounded-lg shadow-sm w-full">
@@ -33,6 +33,7 @@ const SceneRow: React.FC<SceneRowProps> = ({
         -
       </button>
       <button
+        onClick={onAdd}
         className="bg-green-500 text-white px-3 py-2 rounded-lg hover:bg-green-600 transition-all duration-200 shadow-md"
       >
         +

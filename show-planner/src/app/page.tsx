@@ -2,9 +2,10 @@
 import React from "react";
 import SceneRow from "./components/SceneRow";
 import TransitionRow from "./components/TransitionRow";
+import useScenesState from "./hooks/useScenesState";
 
 const MainPage: React.FC = () => {
-  const scenes = [{ id: 1, name: "Scene 1", duration: 30 }, { id: 2, name: "Scene 2", duration: 30 }];
+  const { scenes, addScene } = useScenesState();
 
   return (
     <div className="container mx-auto p-4">
@@ -15,14 +16,13 @@ const MainPage: React.FC = () => {
             index={index}
             name={scene.name}
             duration={scene.duration}
-
+            onAdd={addScene}
           />
-          {index < scenes.length -1 && (
+          {index +1 < scenes.length && (
             <TransitionRow
-              prevScene={scenes[index].name}
-              nextScene= {scenes[index + 1].name}
+              prevScene={scene.name}
+              nextScene={scenes[index+1].name}
               duration={10}
-              
             />
           )}
         </div>
