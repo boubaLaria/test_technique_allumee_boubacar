@@ -1,18 +1,7 @@
 import { useState } from "react";
 import { formatTime } from "../utils/timeFormatter";
-
-interface Scene {
-  id: number;
-  name: string;
-  duration: number; // durée en secondes
-}
-
-interface Transition {
-  id: number;
-  prevScene: string;
-  nextScene: string;
-  duration: number; // durée en secondes
-}
+import { Scene, Transition } from "../types";
+import { loadFromLocalStorage, saveToLocalStorage } from "../utils/localStorage";
 
 const useScenesState = () => {
   const [scenes, setScenes] = useState<Scene[]>([
@@ -95,6 +84,20 @@ const useScenesState = () => {
     setScenes([{ id: 1, name: "Scene 1", duration: 30 }]);
     setTransitions([]);
   };
+  
+  // charger les scenes et les transitions a partir d'un fichier json
+  const loadScenesAndTransitions = () => {
+    const scenesData = loadFromLocalStorage('scenes');
+    const transitionsData = loadFromLocalStorage('transitions');
+    setScenes(scenesData);
+    setTransitions(transitionsData);
+  }
+
+  // sauvegarder les scenes et les transitions dans le local storage
+  const saveScenesAndTransitions = () => {
+    saveToLocalStorage('scenes', scenes);
+    saveToLocalStorage("transitions", transitions);
+  }
 
   return {
     scenes,
@@ -107,6 +110,8 @@ const useScenesState = () => {
     calculateTotalTransitionDuration,
     calculateTotalSceneAndTransitionDuration,
     resetScenes,
+    loadScenesAndTransitions,
+    saveScenesAndTransitions
   };
 };
 

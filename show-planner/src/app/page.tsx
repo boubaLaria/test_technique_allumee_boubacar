@@ -17,6 +17,8 @@ const MainPage: React.FC = () => {
     calculateTotalTransitionDuration,
     calculateTotalSceneAndTransitionDuration,
     resetScenes,
+    loadScenesAndTransitions,
+    saveScenesAndTransitions
   } = useScenesState();
 
   const handleSceneChange = (
@@ -87,10 +89,10 @@ const MainPage: React.FC = () => {
               <button onClick={resetScenes} className="bg-red-400 text-white px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
                 Reset
               </button>
-              <button className="bg-blue-500 text-white  px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
+              <button onClick={loadScenesAndTransitions} className="bg-blue-500 text-white  px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
                 Load
               </button>
-              <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
+              <button onClick={saveScenesAndTransitions} className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-primary-2 transition-all duration-200 shadow-md">
                 Save
               </button>
             </div>
