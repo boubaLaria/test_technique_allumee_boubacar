@@ -35,6 +35,7 @@ const SceneRow: React.FC<SceneRowProps> = ({
       />
       <button
         onClick={onRemove}
+        disabled={index === 0}
         className="bg-red-500 text-white px-3 py-2 rounded-lg hover:bg-red-600 transition-all duration-200 shadow-md"
       >
         -
