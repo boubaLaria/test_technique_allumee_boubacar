@@ -1,6 +1,7 @@
 'use client'
 import React from "react";
 import SceneRow from "./components/SceneRow";
+import TransitionRow from "./components/TransitionRow";
 
 const MainPage: React.FC = () => {
   const scenes = [{ id: 1, name: "Scene 1", duration: 30 }, { id: 2, name: "Scene 2", duration: 30 }];
@@ -16,7 +17,14 @@ const MainPage: React.FC = () => {
             duration={scene.duration}
 
           />
-          
+          {index < scenes.length -1 && (
+            <TransitionRow
+              prevScene={scenes[index].name}
+              nextScene= {scenes[index + 1].name}
+              duration={10}
+              
+            />
+          )}
         </div>
       ))}
     </div>

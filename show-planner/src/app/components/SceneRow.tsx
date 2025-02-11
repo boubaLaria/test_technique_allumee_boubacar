@@ -4,6 +4,7 @@ interface SceneRowProps {
   index: number;
   name: string;
   duration: number;
+
 }
 
 const SceneRow: React.FC<SceneRowProps> = ({
