@@ -14,16 +14,17 @@ const TransitionRow: React.FC<TransitionRowProps> = ({
   onChange,
 }) => {
   return (
-    <div className="flex items-center space-x-4 border-b py-3 px-4 bg-gray-200 rounded-lg shadow-sm ">
-      <span className="flex-1 text-center font-semibold text-gray-700">
+    <div className="flex items-center space-x-4 border-b py-3 px-4 bg-gray-200 rounded-lg shadow-sm my-2">
+      <span className="font-semibold text-gray-700">
         TR {prevScene} → {nextScene}
       </span>
       <input
         type="number"
         value={duration}
         onChange={(e) => onChange(Number(e.target.value))}
-        className="border border-gray-300 p-2 rounded-md w-24 text-center focus:ring-2 focus:ring-blue-400 focus:outline-none"
+        className="border  border-gray-300 p-2 rounded-md w-24 text-center focus:ring-2 focus:ring-blue-400 focus:outline-none"
       />
+      <span className="text-gray-700"></span>
     </div>
   );
 };

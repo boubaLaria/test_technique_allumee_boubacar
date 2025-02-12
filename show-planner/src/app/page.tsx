@@ -62,6 +62,7 @@ const MainPage: React.FC = () => {
                     nextScene={scenes[index + 1].name}
                     duration={transitions[index].duration} // keep duration in seconds
                     onChange={(value) => handleTransitionChange(index, value)}
+                    
                   />
                 )}
               </div>
