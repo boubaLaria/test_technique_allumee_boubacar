@@ -13,4 +13,9 @@ SessionLocal = sessionmaker(bind=engine, autoflush= False, autocommit=False)
 # Définition de la base des modèles
 Base = declarative_base()
 
-
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
