@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { formatTime } from "../utils/timeFormatter";
 import { Scene, Transition } from "../types";
-import { loadFromLocalStorage, saveToLocalStorage } from "../utils/localStorage";
+// import { loadFromLocalStorage, saveToLocalStorage } from "../utils/localStorage";
+import { loadFromApi, saveToApi } from "../utils/apiStorage";
 
 const useScenesState = () => {
   const [scenes, setScenes] = useState<Scene[]>([
@@ -86,17 +87,21 @@ const useScenesState = () => {
   };
   
   // charger les scenes et les transitions a partir d'un fichier json
-  const loadScenesAndTransitions = () => {
-    const scenesData = loadFromLocalStorage('scenes');
-    const transitionsData = loadFromLocalStorage('transitions');
-    setScenes(scenesData);
+  const loadScenesAndTransitions = async () => {
+    // const scenesData = loadFromLocalStorage('scenes');
+    // const transitionsData = loadFromLocalStorage('transitions');
+    const scenesData = await loadFromApi('scenes');
+    const transitionsData = await loadFromApi('transitions');
+    setScenes( scenesData);
     setTransitions(transitionsData);
   }
 
   // sauvegarder les scenes et les transitions dans le local storage
   const saveScenesAndTransitions = () => {
-    saveToLocalStorage('scenes', scenes);
-    saveToLocalStorage("transitions", transitions);
+    // saveToLocalStorage('scenes', scenes);
+    // saveToLocalStorage("transitions", transitions);
+    saveToApi("scenes", scenes);
+    saveToApi("transitions", transitions);
   }
 
   return {
