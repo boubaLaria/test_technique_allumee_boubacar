@@ -43,15 +43,23 @@ const useScenesState = () => {
   };
 
   const removeScene = (id: number) => {
+    // Trouver l'index de la scène à supprimer
+    const index = scenes.findIndex((scene) => scene.id === id);
     const updatedScenes = scenes.filter((scene) => scene.id !== id);
     setScenes(updatedScenes);
 
-    // Supprimer les transitions liées à la scène supprimée
-    setTransitions(
-      transitions.filter(
-        (tr) => tr.prevScene !== `Scene ${id}` && tr.nextScene !== `Scene ${id}`
-      )
-    );
+    // supprimer la transition qui suit la scène à supprimer si c'est pas la dernière scène
+    // si c'est la dernier scene suppriner la transition qui la précède
+    console.log('index', index);
+    if (index < scenes.length - 1) {
+      setTransitions(
+        transitions.filter((_, i) => i !== index)
+      );
+    } else {
+      setTransitions(
+        transitions.filter((_, i) => i !== index -1)
+      );
+    }
   };
 
   const calculateTotalSceneDuration = () => {
