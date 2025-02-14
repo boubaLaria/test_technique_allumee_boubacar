@@ -1,0 +1,45 @@
+version: '3.8'
+
+services:
+  show-planner:
+    build:
+      context: ./show-planner
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    volumes:
+      - ./show-planner:/app
+    depends_on:
+      - db  # Attendre que la DB soit disponible
+
+  fastapi:
+    build:
+      context: ./fast-api
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./fast-api:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/postgres
+    depends_on:
+      db:
+        condition: service_healthy  # Attendre que la DB soit prête
+
+  db:
+    image: postgres:17
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  postgres_data:

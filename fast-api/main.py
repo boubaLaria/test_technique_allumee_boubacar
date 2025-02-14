@@ -5,9 +5,13 @@ from model import Scene, Transition
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import inspect
 
-Scene.Base.metadata.create_all(bind=engine)
-Transition.Base.metadata.create_all(bind=engine)
+inspector = inspect(engine)
+if "scene" not in inspector.get_table_names():
+    Scene.Base.metadata.create_all(bind=engine)
+if "transition" not in inspector.get_table_names():
+    Transition.Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 # Liste des origines autorisées 
