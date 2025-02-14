@@ -4,6 +4,11 @@
 Ce projet contient deux applications :  
 1. **Next.js** (pour le frontend)  
 2. **FastAPI** (pour le backend)
+## Demo
+
+
+https://github.com/user-attachments/assets/64676625-5c42-4151-b68f-c4a39e2d1da8
+
 
 ## Prérequis
 
